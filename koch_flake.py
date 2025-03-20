@@ -5,7 +5,7 @@ def koch_line(a, deep, t):
         t.forward(a)
     else:
         for i in [60, -120, 60, 0]:
-            koch_line(a/3, deep-1)
+            koch_line(a/3, deep-1, t)
             t.left(i)
 def koch(a, deep):
     t = Turtle()

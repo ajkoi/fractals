@@ -1,8 +1,9 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-def peano_curve(start=(0, 0), size=1, depth=5):
-    if depth== 0:
+
+def peano_curve(start=(0, 0), size=1, depth=1, pair=0, column=0):
+    if depth == 0:
         return [start]
 
     # Calculate the size of the sub-squares
@@ -10,13 +11,86 @@ def peano_curve(start=(0, 0), size=1, depth=5):
 
     # Recursively generate the Peano curve for each sub-square
     points = []
-
-    points += peano_curve((start), sub_size, depth-1)
-    points += peano_curve((start[0], start[1]+sub_size), sub_size, depth-1)
+    if pair == 0:
+        if (column) % 2 == 0:
+            points += peano_curve((start), sub_size, depth-1, 0, column)
+            points += peano_curve((start[0], start[1] +
+                                   sub_size), sub_size, depth-1, 1, column)
+            points += peano_curve((start[0], start[1] +
+                                   2 * sub_size), sub_size, depth-1, 0, column)
+            points += peano_curve((start[0] + sub_size, start[1] +
+                                   2 * sub_size), sub_size, depth-1, 1, column+1)
+            points += peano_curve((start[0] + sub_size, start[1] +
+                                   sub_size), sub_size, depth-1, 0, column+1)
+            points += peano_curve((start[0] + sub_size, start[1]
+                                   ), sub_size, depth-1, 1, column+1)
+            points += peano_curve((start[0] + 2 *
+                                   sub_size, start[1]), sub_size, depth-1, 0, column+2)
+            points += peano_curve((start[0] + 2 * sub_size, start[1] +
+                                   sub_size), sub_size, depth-1, 1, column+2)
+            points += peano_curve((start[0] + 2 * sub_size, start[1] +
+                                   2 * sub_size), sub_size, depth-1, 0, column+2)
+        elif (column) % 2 == 1:
+            points += peano_curve((start[0] + 2 * sub_size, start[1] +
+                                   2 * sub_size), sub_size, depth-1, 0, column+2)
+            points += peano_curve((start[0] + 2 * sub_size, start[1] +
+                                   sub_size), sub_size, depth-1, 1, column+2)
+            points += peano_curve((start[0] + 2 *
+                                   sub_size, start[1]), sub_size, depth-1, 0, column+2)
+            points += peano_curve((start[0] + sub_size, start[1]
+                                   ), sub_size, depth-1, 1, column+1)
+            points += peano_curve((start[0] + sub_size, start[1] +
+                                   sub_size), sub_size, depth-1, 0, column+1)
+            points += peano_curve((start[0] + sub_size, start[1] +
+                                   2 * sub_size), sub_size, depth-1, 1, column+1)
+            points += peano_curve((start[0], start[1] +
+                                   2 * sub_size), sub_size, depth-1, 0, column)
+            points += peano_curve((start[0], start[1] +
+                                   sub_size), sub_size, depth-1, 1, column)
+            points += peano_curve((start), sub_size, depth-1, 0, column)
+    elif pair == 1:
+        if (column) % 2 == 0:
+            points += peano_curve((start[0] + 2 *
+                                   sub_size, start[1]), sub_size, depth-1, 1, column+2)
+            points += peano_curve((start[0] + 2 * sub_size, start[1] +
+                                   sub_size), sub_size, depth-1, 0, column+2)
+            points += peano_curve((start[0] + 2 * sub_size, start[1] +
+                                   2 * sub_size), sub_size, depth-1, 1, column+2)
+            points += peano_curve((start[0] + sub_size, start[1] +
+                                   2 * sub_size), sub_size, depth-1, 0, column+1)
+            points += peano_curve((start[0] + sub_size, start[1] +
+                                   sub_size), sub_size, depth-1, 1, column+1)
+            points += peano_curve((start[0] + sub_size, start[1]
+                                   ), sub_size, depth-1, 0, column+1)
+            points += peano_curve((start), sub_size, depth-1, 1, column)
+            points += peano_curve((start[0], start[1] +
+                                   sub_size), sub_size, depth-1, 0, column)
+            points += peano_curve((start[0], start[1] +
+                                   2 * sub_size), sub_size, depth-1, 1, column)
+        elif (column) % 2 == 1:
+            points += peano_curve((start[0], start[1] +
+                                   2 * sub_size), sub_size, depth-1, 1, column)
+            points += peano_curve((start[0], start[1] +
+                                   sub_size), sub_size, depth-1, 0, column)
+            points += peano_curve((start), sub_size, depth-1, 1, column)
+            points += peano_curve((start[0] + sub_size, start[1]
+                                   ), sub_size, depth-1, 0, column+1)
+            points += peano_curve((start[0] + sub_size, start[1] +
+                                   sub_size), sub_size, depth-1, 1, column+1)
+            points += peano_curve((start[0] + sub_size, start[1] +
+                                   2 * sub_size), sub_size, depth-1, 0, column+1)
+            points += peano_curve((start[0] + 2 * sub_size, start[1] +
+                                   2 * sub_size), sub_size, depth-1, 1, column+2)
+            points += peano_curve((start[0] + 2 * sub_size, start[1] +
+                                   sub_size), sub_size, depth-1, 0, column+2)
+            points += peano_curve((start[0] + 2 * sub_size, start[1]),
+                                  sub_size, depth-1, 1, column+2)
     return points
 # Generate Peano curve points
-order = 2
-points = peano_curve()
+
+
+order = 5
+points = peano_curve(depth=order)
 # Extract x and y coordinates
 x_coords, y_coords = zip(*points)
 

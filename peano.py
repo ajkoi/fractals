@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import sys
 
 
 def peano_curve(start=(0, 0), size=1, depth=1, pair=0, column=0):
@@ -89,16 +90,20 @@ def peano_curve(start=(0, 0), size=1, depth=1, pair=0, column=0):
 # Generate Peano curve points
 
 
-order = 5
-points = peano_curve(depth=order)
+if __name__ == "__main__":
+    if len(sys.argv) == 2:
+        order = int(sys.argv[1])
+    else:
+        order = 2
+    points = peano_curve(depth=order)
 # Extract x and y coordinates
-x_coords, y_coords = zip(*points)
+    x_coords, y_coords = zip(*points)
 
 # Plot the Peano curve
-plt.figure(figsize=(6, 6))
-plt.plot(x_coords, y_coords, 'b-', lw=1)
-plt.title(f'Peano Curve (Order {order})')
-plt.xlim(0, 1)
-plt.ylim(0, 1)
-plt.gca().set_aspect('equal', adjustable='box')
-plt.show()
+    plt.figure(figsize=(6, 6))
+    plt.plot(x_coords, y_coords, 'b-', lw=1)
+    plt.title(f'Peano Curve (Order {order})')
+    plt.xlim(0, 1)
+    plt.ylim(0, 1)
+    plt.gca().set_aspect('equal', adjustable='box')
+    plt.show()
